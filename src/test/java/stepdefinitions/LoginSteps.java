@@ -3,41 +3,45 @@ package stepdefinitions;
 import io.cucumber.java.en.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-
+import static com.codeborne.selenide.Selenide.*;
 import static org.testng.Assert.*;
 
 public class LoginSteps {
 
-    WebDriver driver;
     Response response;
 
     @Given("I open the login page")
     public void openLoginPage() {
-        driver = new ChromeDriver();
-        driver.get("https://example.com/login");
+        // Opens the page using Selenide
+        open("https://the-internet.herokuapp.com/login");
     }
 
     @When("I enter username {string} and password {string}")
     public void enterCredentials(String username, String password) {
-        driver.findElement(By.id("username")).sendKeys(username);
-        driver.findElement(By.id("password")).sendKeys(password);
-        driver.findElement(By.id("login")).click();
+        // Use Selenide selectors and actions
+        $("#username").setValue(username);
+        $("#password").setValue(password);
+        $("#login").click();
     }
 
     @Then("I should see the homepage")
     public void verifyHomepage() {
-        assertTrue(driver.getTitle().contains("Home"));
-        driver.quit();
+        String title = webdriver().driver().getWebDriver().getTitle();
+        assertTrue(title != null && title.contains("Home"));
+        closeWebDriver();
     }
 
     @When("I send a login POST request with username {string} and password {string}")
-    public void sendLoginApi(String username, String password) {
+    public void sendLoginApi() {
         response = RestAssured
                 .given()
                 .contentType("application/json")
-                .body("{ \"username\": \"" + username + "\", \"password\": \"" + password + "\" }")
+                .body("""
+                        {
+                          "email": "eve.holt@reqres.in",
+                          "password": "cityslicka"
+                        }
+                        """)
                 .post("https://api.example.com/login");
     }
 
