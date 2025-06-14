@@ -1,0 +1,5 @@
+com\framework\hooks\Hooks.class
+com\framework\stepdefinitions\LoginSteps.class
+com\framework\API\ApiClient.class
+com\framework\runners\TestRunner.class
+com\framework\stepdefinitions\ApiStepDefinitions.class

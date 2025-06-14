@@ -1,4 +1,4 @@
-package stepdefinitions;
+package com.framework.stepdefinitions;
 
 import io.cucumber.java.en.*;
 import io.restassured.RestAssured;
@@ -31,22 +31,8 @@ public class LoginSteps {
         closeWebDriver();
     }
 
-    @When("I send a login POST request with username {string} and password {string}")
-    public void sendLoginApi() {
-        response = RestAssured
-                .given()
-                .contentType("application/json")
-                .body("""
-                        {
-                          "email": "eve.holt@reqres.in",
-                          "password": "cityslicka"
-                        }
-                        """)
-                .post("https://api.example.com/login");
-    }
-
-    @Then("the response status should be {int}")
-    public void verifyResponse(int statusCode) {
-        assertEquals(response.getStatusCode(), statusCode);
-    }
+    @And("Close browser")
+    public void closeBrowser() { 
+            closeWebDriver();
+        }
 }

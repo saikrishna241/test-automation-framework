@@ -1,18 +1,18 @@
 package utilities;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigReader {
-
-    private static Properties properties;
+    private static final Properties properties = new Properties();
 
     static {
-        try {
-            FileInputStream fis = new FileInputStream("src/test/resources/config.properties");
-            properties = new Properties();
-            properties.load(fis);
+        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream("Properties/config.properties")) {
+            if (input == null) {
+                throw new RuntimeException("config.properties not found in classpath!");
+            }
+            properties.load(input);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load config.properties file.", e);
         }
@@ -22,11 +22,8 @@ public class ConfigReader {
         return properties.getProperty(key);
     }
 
+    // ✅ Add this method
     public static int getInt(String key) {
-        return Integer.parseInt(properties.getProperty(key));
-    }
-
-    public static boolean getBoolean(String key) {
-        return Boolean.parseBoolean(properties.getProperty(key));
+        return Integer.parseInt(get(key));
     }
 }
