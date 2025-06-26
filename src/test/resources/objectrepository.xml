@@ -1,0 +1,8 @@
+<ObjectRepository>
+    <Page name="OmayoHome">
+        <WebElement logicalName="mainDropdown" locatorType="id" locatorValue="drop1"/>
+        <WebElement logicalName="textAreaField" locatorType="xpath" locatorValue="//textarea[@id='ta1']"/>
+        <WebElement logicalName="textfiled" locatorType="id" locatorValue="post-body-9023929218208337252"/>
+    </Page>
+
+</ObjectRepository>

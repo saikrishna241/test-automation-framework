@@ -1,23 +1,9 @@
 package com.framework.hooks;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import com.framework.TestResults.ReportSetup;
-import io.cucumber.java.After;
-import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
 import io.restassured.RestAssured;
-import org.openqa.selenium.OutputType;
 import utilities.ConfigReader;
-import com.codeborne.selenide.Configuration;
-
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class Hooks {
 
@@ -36,24 +22,10 @@ public class Hooks {
         RestAssured.baseURI = ConfigReader.get("api.base.url");
     }
 
+//    @After
+//    public void tearDown() {
+//        closeWebDriver(); // Selenide will close browser
+//    }
 
-    @After
-    public void tearDown() {
-        closeWebDriver(); // Selenide will close browser
-    }
-    @AfterStep
-    public void takeScreenshotIfFailed(Scenario scenario) {
-        if (scenario.isFailed()) {
-            try {
-                byte[] screenshot = Selenide.screenshot(OutputType.BYTES);
-                String fileName = scenario.getName().replaceAll("[^a-zA-Z0-9]", "_") + "_screenshot.png";
-                Path dest = Paths.get(ReportSetup.reportFolderPath + "/" + fileName);
-                Files.write(dest, screenshot);
-                System.out.println("📸 Screenshot saved: " + fileName);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 }

@@ -15,8 +15,5 @@ import org.testng.annotations.BeforeSuite;
 )
 
 public class TestRunner extends AbstractTestNGCucumberTests {
-    @BeforeSuite
-    public void initReporting() {
-        new com.framework.TestResults.ReportSetup().setupReportDirectory();
-    }
+
 }
